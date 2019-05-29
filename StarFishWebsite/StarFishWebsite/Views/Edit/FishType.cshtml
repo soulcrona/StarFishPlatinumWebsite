@@ -1,0 +1,18 @@
+﻿@model StarFishWebsite.Models.FishType
+
+@{
+    ViewBag.Title = "FishType";
+}
+
+<h2>FishType</h2>
+
+@using (Html.BeginForm("EditFishType", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="form-group">
+    @Html.LabelFor(u => u.Name)
+    @Html.TextBoxFor(u => u.Name, new { @class = "form-control", @value = Model.Name })
+    @Html.HiddenFor(u => u.ID, new { @value = Model.ID })
+</div>
+    <br />
+    <button type="submit" class="btn btn-primary">Edit</button>
+}

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\StarFishWebsite",
+    "\\StarFishWebsite\\StarFishWebsite",
+    "\\StarFishWebsite\\StarFishWebsite\\Controllers",
+    "\\StarFishWebsite\\StarFishWebsite\\css",
+    "\\StarFishWebsite\\StarFishWebsite\\Models",
+    "\\StarFishWebsite\\StarFishWebsite\\Views",
+    "\\StarFishWebsite\\StarFishWebsite\\Views\\List",
+    "\\StarFishWebsite\\StarFishWebsite\\Views\\Shared",
+    "\\StarFishWebsite\\StarFishWebsite\\Views\\Upload"
+  ],
+  "SelectedNode": "\\StarFishWebsite\\StarFishWebsite\\Views\\List\\Fish.cshtml",
+  "PreviewInSolutionExplorer": false
+}

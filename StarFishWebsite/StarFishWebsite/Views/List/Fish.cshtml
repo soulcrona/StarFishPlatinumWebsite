@@ -1,0 +1,42 @@
+﻿@model IEnumerable<StarFishWebsite.Models.Fish>
+
+@{
+    ViewBag.Title = "Fish";
+}
+
+<h2>Fish</h2>
+
+@Html.ActionLink("Add Fish", "UploadFile", "Upload", "", new { @class = "btn btn-primary" })
+
+<div style="background-color:white">
+    <table>
+        @foreach (var item in Model)
+        {
+            if (item.Available == true)
+            {
+                <tr>
+                    <td>
+                        <img src='@Url.Action("ConvertImage", "List", new { id = item.ImageCall.ID })' height='200' width="400" />
+                    </td>
+                    <td style="background-color:white" width="400">
+                        @if (item.InGame == true)
+                        {
+                            <h4 style="color:green">@item.Name</h4>
+                        }
+                        else
+                        {
+                            <h4 style="color:red">@item.Name</h4>
+                        }
+                        <p>Fish Type: @item.FishType.Name</p>
+                        <p>Affiliate: <a href="@item.AffiliateLink.SiteName">@item.AffiliateLink.name</a></p>
+                        <p>Description: @item.Description</p>
+                        <p>SubDescription: @item.SubDescriptions</p>
+                        <p>More Descriptions: @item.MoreDescriptions</p>
+                        @Html.ActionLink("Edit", "Fish", "Edit", new { item.ID }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Delete", "SoftDeleteFish", "Edit", new { item.ID }, new { @class = "btn btn-default" })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

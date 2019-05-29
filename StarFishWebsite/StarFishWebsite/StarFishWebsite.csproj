@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -142,10 +148,58 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EditController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905120917037_Initial.cs" />
+    <Compile Include="Migrations\201905120917037_Initial.Designer.cs">
+      <DependentUpon>201905120917037_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905140627031_migration1.cs" />
+    <Compile Include="Migrations\201905140627031_migration1.Designer.cs">
+      <DependentUpon>201905140627031_migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905142049364_migration3.cs" />
+    <Compile Include="Migrations\201905142049364_migration3.Designer.cs">
+      <DependentUpon>201905142049364_migration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905142334422_migration2.cs" />
+    <Compile Include="Migrations\201905142334422_migration2.Designer.cs">
+      <DependentUpon>201905142334422_migration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905150658021_migration4.cs" />
+    <Compile Include="Migrations\201905150658021_migration4.Designer.cs">
+      <DependentUpon>201905150658021_migration4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905150704010_migration5.cs" />
+    <Compile Include="Migrations\201905150704010_migration5.Designer.cs">
+      <DependentUpon>201905150704010_migration5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905151048022_migration7.cs" />
+    <Compile Include="Migrations\201905151048022_migration7.Designer.cs">
+      <DependentUpon>201905151048022_migration7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905272058100_FishAvailabilityAdded.cs" />
+    <Compile Include="Migrations\201905272058100_FishAvailabilityAdded.Designer.cs">
+      <DependentUpon>201905272058100_FishAvailabilityAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291710075_AvailabilityAdded.cs" />
+    <Compile Include="Migrations\201905291710075_AvailabilityAdded.Designer.cs">
+      <DependentUpon>201905291710075_AvailabilityAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AffiliateLink.cs" />
+    <Compile Include="Models\AllTables.cs" />
+    <Compile Include="Models\Context.cs" />
+    <Compile Include="Models\Fish.cs" />
+    <Compile Include="Models\FishType.cs" />
+    <Compile Include="Models\Food.cs" />
+    <Compile Include="Models\FoodType.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -182,13 +236,26 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Upload\UploadFile.cshtml" />
+    <Content Include="Views\Upload\NewFishType.cshtml" />
+    <Content Include="Views\Upload\NewFood.cshtml" />
+    <Content Include="Views\Upload\NewFoodType.cshtml" />
+    <Content Include="Views\List\Fish.cshtml" />
+    <Content Include="Views\List\Food.cshtml" />
+    <Content Include="Views\List\FoodType.cshtml" />
+    <Content Include="Views\List\FishType.cshtml" />
+    <Content Include="Views\Edit\Fish.cshtml" />
+    <Content Include="Views\Edit\FishType.cshtml" />
+    <Content Include="Views\Edit\Food.cshtml" />
+    <Content Include="Views\Edit\FoodType.cshtml" />
+    <Content Include="Views\Upload\NewAffiliate.cshtml" />
+    <Content Include="Views\List\Affiliate.cshtml" />
+    <Content Include="Views\Edit\Affiliate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Index\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -202,6 +269,35 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201905120917037_Initial.resx">
+      <DependentUpon>201905120917037_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905140627031_migration1.resx">
+      <DependentUpon>201905140627031_migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905142049364_migration3.resx">
+      <DependentUpon>201905142049364_migration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905142334422_migration2.resx">
+      <DependentUpon>201905142334422_migration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905150658021_migration4.resx">
+      <DependentUpon>201905150658021_migration4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905150704010_migration5.resx">
+      <DependentUpon>201905150704010_migration5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905151048022_migration7.resx">
+      <DependentUpon>201905151048022_migration7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905272058100_FishAvailabilityAdded.resx">
+      <DependentUpon>201905272058100_FishAvailabilityAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291710075_AvailabilityAdded.resx">
+      <DependentUpon>201905291710075_AvailabilityAdded.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

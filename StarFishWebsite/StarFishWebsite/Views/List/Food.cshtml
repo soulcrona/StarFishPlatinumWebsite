@@ -1,0 +1,52 @@
+﻿@model IEnumerable<StarFishWebsite.Models.Food>
+
+@{
+    ViewBag.Title = "Food";
+}
+
+<h2>Foods</h2>
+
+@Html.ActionLink("Add Food", "NewFood", "Upload", "", new { @class = "btn btn-primary" })
+
+
+<div>
+    <table>
+        <tr>
+            <th>
+                Name:
+            </th>
+            <th>
+                Type:
+            </th>
+            <th>
+                In Game:
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            if (item.Available == true)
+            {
+                <tr>
+                    <td>
+                        <p>@item.Name</p>
+                    </td>
+                    <td>
+                        <p>@item.TypeofFood.Name</p>
+                    </td>
+                    <td>
+                        <p>@item.InGame.ToString()</p>
+                    </td>
+                    <td>
+                        <div>
+                            @Html.ActionLink("Edit", "Food", "Edit", new { item.ID }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("Delete", "SoftDeleteFood", "Edit", new { item.ID }, new { @class = "btn btn-default" })
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

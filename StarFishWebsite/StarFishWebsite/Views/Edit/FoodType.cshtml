@@ -1,0 +1,18 @@
+﻿@model StarFishWebsite.Models.FoodType
+
+@{
+    ViewBag.Title = "FoodType";
+}
+
+<h2>FoodType</h2>
+
+@using (Html.BeginForm("EditFoodType", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(u => u.Name)
+        @Html.TextBoxFor(u => u.Name, new { @class = "form-control", @value = Model.Name })
+        @Html.HiddenFor(u => u.ID, new { @value = Model.ID })
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Edit</button>
+}
