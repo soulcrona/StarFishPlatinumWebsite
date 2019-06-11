@@ -3,30 +3,45 @@
 @{
     ViewBag.Title = "FoodType";
 }
-
-<h2>Food Type</h2>
-
-@Html.ActionLink("Add Food Type", "NewFoodType", "Upload", "", new { @class = "btn btn-primary" })
+@using StarFishWebsite.Models
 
 
-<div>
-    <table>
-        <tr>
-            <th>Name:</th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            if (item.Available == true)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>
-                        @Html.ActionLink("Edit", "FoodType", "Edit", new { item.ID }, new { @class = "btn btn-default" })
-                        @Html.ActionLink("Delete", "SoftDeleteFoodType", "Edit", new { item.ID }, new { @class = "btn btn-default" })
-                    </td>
-                </tr>
-            }
-        }
-    </table>
-</div>
+        <div class="card bg-light mb-3">
+            <div class="card-header">
+                @using (Context i = new Context())
+                {
+                    if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                    {
+                        @Html.ActionLink("Add Food Type", "NewFoodType", "Upload", "", new { @class = "btn btn-primary" })
+                    }
+                }
+                        <h2>Food Types</h2>
+                    </div>
+            <div class="card-body">
+                <table>
+                    <tr>
+                        <th>Name:</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        if (item.Available == true)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    @using (Context i = new Context())
+                                    {
+                                        if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                                        {
+                                            @Html.ActionLink("Edit", "FoodType", "Edit", new { item.ID }, new { @class = "btn btn-primary" })
+                                            @Html.ActionLink("Delete", "SoftDeleteFoodType", "Edit", new { item.ID }, new { @class = "btn btn-primary" })
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>

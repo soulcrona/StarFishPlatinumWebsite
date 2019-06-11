@@ -1,0 +1,51 @@
+﻿@model IEnumerable<StarFishWebsite.Models.Environment>
+
+@{
+    ViewBag.Title = "Environment";
+}
+
+@using StarFishWebsite.Models
+
+
+<div class="card bg-dark mb-3">
+    <div class="card-header">
+        <h2>Environment</h2>
+    </div>
+    <div class="card-body">
+
+        @using (Context i = new Context())
+        {
+            if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+            {
+                @Html.ActionLink("Add Environment", "NewEnvironment", "Upload", "", new { @class = "btn btn-primary" })
+
+            }
+            foreach (var item in Model)
+            {
+                if (item.available == true)
+                {
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">
+                            <h4 style="color:black">@item.name</h4>
+                        </div>
+                        <div class="card-body">
+                            <img src='@Url.Action("ConvertImage", "List", new { id = item.image.ID })' height='200' width="400" style="float:right" />
+                            @if (item.foodType.Name != "None")
+                            {
+                                <p>Food Type: @item.foodType.Name</p>
+
+                            }
+                            <p>Price: $@item.price.ToString("0.00")</p>
+
+                            @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                            {
+
+                                @Html.ActionLink("Edit", "Environment", "Edit", new { item.id }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "SoftDeleteEnvironment", "Edit", new { item.id }, new { @class = "btn btn-primary" })
+                            }
+                            </div>
+                    </div>
+                }
+            }
+        }
+    </div>

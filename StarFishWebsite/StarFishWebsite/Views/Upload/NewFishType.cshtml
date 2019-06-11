@@ -4,16 +4,30 @@
     ViewBag.Title = "AddFishType";
 }
 
-<h2>AddFishType</h2>
-
-
-@using (Html.BeginForm("AddFishType", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(u => u.Name)
-        @Html.TextBoxFor(u => u.Name, new { @class = "form-control" })
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>New Fish Type:</h2>
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Edit</button>
-}
+    <div class="card-body">
+        @using (Html.BeginForm("AddFishType", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tr>
+                    <td>
+                        
+                            @Html.LabelFor(u => u.Name)</td><td>
+                            @Html.TextBoxFor(u => u.Name, new { @class = "form-control" })
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                        </td>
+                </tr>
+            </table>
 
+
+        }
+</div>
+</div>

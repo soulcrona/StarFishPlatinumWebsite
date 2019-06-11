@@ -20,5 +20,7 @@ namespace StarFishWebsite.Models
         public String MoreDescriptions { get; set; }
         public FishType FishType {get; set;}
         public bool Available { get; set; }
+        public int AccessLevel { get; set; }
+        public float Price { get; set; }
     }
 }

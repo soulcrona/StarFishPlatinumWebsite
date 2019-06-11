@@ -1,0 +1,81 @@
+﻿@model StarFishWebsite.Models.Environment
+
+@{
+    ViewBag.Title = "Environment";
+}
+
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>@Model.name</h2>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("EditEnvironment", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tr>
+                    <div class="form-group">
+                        <td>
+                            <label>Name: </label>
+                        </td>
+                        <td>
+
+                            @Html.TextBoxFor(u => u.name, new { @class = "form-control", @value = Model.name})
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                        <td>
+                            <label>Price: </label>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(u => u.price, new { @type = "number", step = "0.01" , @value = Model.price})
+                        </td>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>
+                            <label>Food Type:</label>
+                        </td>
+                        <td>
+                            @Html.DropDownList("foodType", (SelectList)ViewBag.FoodTypes, "Select a food type")
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td>
+                            <label>Available: </label>
+                        </td>
+                        <td>
+                            @if (Model.available == true)
+                            {
+                                @Html.CheckBoxFor(u => u.available, new { @checked = true })
+                            }
+                            @if (Model.available == false)
+                            {
+                                @Html.CheckBoxFor(u => u.available)
+                            }
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Image:</label>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="file" name="filetobeuploaded" />
+                        </div>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>

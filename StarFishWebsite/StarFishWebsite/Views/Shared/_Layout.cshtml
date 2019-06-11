@@ -4,39 +4,138 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Starfish Website", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", null, "")</li>
-                    <li>@Html.ActionLink("Fish Index", "Fish", "List", null, "")</li>
-                    <li>@Html.ActionLink("Upload New Fish", "UploadFile", "Upload", null, "")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     @Scripts.Render("~/bundles/jquery")
+    <link href="@Url.Content("~/Content/Bootstrap.css")" rel="stylesheet" type="text/css" />
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+    @using StarFishWebsite.Models
+
+</head>
+<body style="background-color:aquamarine">
+
+    @using (Context i = new Context())
+    {
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+            @Html.ActionLink("Starfish Website", "Index", "Home", null, new { @class="navbar-brand"})
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <div class="dropdown" style="margin-right: 8px">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fish</a>
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Browse", "Fish", "List", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Browse Fish Types", "FishType", "List", null, new { @class = "dropdown-item" })
+                                @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                                {
+                                    @Html.ActionLink("Add Fish", "UploadFile", "Upload", null, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Add Fish Type", "NewFishType", "Upload", null, new { @class = "dropdown-item" })
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown" style="margin-right: 8px">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Food</a>
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Browse", "Food", "List", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Browse Food Types", "FoodType", "List", null, new { @class = "dropdown-item" })
+                                @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                                {
+                                    @Html.ActionLink("Add Food", "NewFood", "Upload", null, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Add Food Type", "NewFoodType", "Upload", null, new { @class = "dropdown-item" })
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown" style="margin-right: 8px">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Environmentals</a>
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Browse", "Environment", "List", null, new { @class = "dropdown-item" })
+                                @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                                {
+                                    @Html.ActionLink("Add Environmental", "NewEnvironment", "Upload", null, new { @class = "dropdown-item" })
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown" style="margin-right: 8px">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Affiliates</a>
+                            <div class="dropdown-menu">
+                                @Html.ActionLink("Browse", "Affiliate", "List", null, new { @class = "dropdown-item" })
+                                @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                                {
+                                    @Html.ActionLink("Add Affiliate", "NewAffiliate", "Upload", null, new { @class = "dropdown-item" })
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                    {
+                        <li class="nav-item">
+                            <div class="dropdown" style="margin-right: 8px">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users</a>
+                                <div class="dropdown-menu">
+                                    @Html.ActionLink("Add User", "NewUser", "Upload", null, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Add Role", "NewRole", "Upload", null, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Set Button Image", "NewButton", "Upload", null, new { @class = "dropdown-item" })
+                                </div>
+                            </div>
+                        </li>
+
+                    }
+
+                </ul>
+                @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() == 0)
+                {
+                    <div class="form-inline my-2 my-lg-0">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                @Html.ActionLink("Login", "Login", "Security", null, new { @class = "nav-link" })
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-inline my-2 my-lg-0">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                @Html.ActionLink("Register", "NewUser", "Upload", null, new { @class = "nav-link" })
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-inline my-2 my-lg-0">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                @Html.ActionLink("Log Out (" + i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Username + ")", "LogoutUser", "Security", null, new { @class = "nav-link" })
+                            </li>
+                        </ul>
+                    </div>
+                }
+                <form class="form-inline my-2 my-lg-0">
+                    @*<input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>*@
+                </form>
+            </div>
+        </nav>
+
+        <div class="container body-content">
+            <br />
+            @RenderBody()
+            <hr />
+            <footer>
+            </footer>
+        </div>
+    }
 </body>
 </html>

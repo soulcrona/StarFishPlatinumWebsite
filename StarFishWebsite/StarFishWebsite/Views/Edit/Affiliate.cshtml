@@ -4,23 +4,36 @@
     ViewBag.Title = "Affiliate";
 }
 
-<h2>Affiliate</h2>
-
-@using (Html.BeginForm("EditAffiliate", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.HiddenFor(u => u.ID, new { @value = Model.ID })
-    <div class="form-group">
-        @Html.LabelFor(u => u.name)
-        @Html.TextBoxFor(u => u.name, new { @class = "form-control", @value = Model.name })
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>@Model.name</h2>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(u => u.SiteName)
-        @Html.TextBoxFor(u => u.SiteName, new { @class = "form-control", @value = Model.SiteName })
+    <div class="card-body">
+        @using (Html.BeginForm("EditAffiliate", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                @Html.HiddenFor(u => u.ID, new { @value = Model.ID })
+                <tr>
+                    <td><label>Name: </label></td>
+                    <td>@Html.TextBoxFor(u => u.name, new { @class = "form-control", @value = Model.name })</td>
+                </tr>
+                <tr>
+                    <td><label>Website: </label></td>
+                    <td>@Html.TextBoxFor(u => u.SiteName, new { @class = "form-control", @value = Model.SiteName })</td>
+                </tr>
+                <tr>
+                    <td><label>Description: </label></td>
+                    <td>@Html.TextBoxFor(u => u.Description, new { @class = "form-control", @value = Model.Description })</td>
+                </tr>
+                <tr><td></td><td></td></tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </td>
+                </tr>
+                <br />
+            </table>
+        }
     </div>
-    <div class="form-group">
-        @Html.LabelFor(u => u.Description)
-        @Html.TextBoxFor(u => u.Description, new { @class = "form-control", @value = Model.Description })
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Edit</button>
-}

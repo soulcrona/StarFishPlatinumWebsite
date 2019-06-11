@@ -12,6 +12,64 @@ namespace StarFishWebsite.Controllers
     {
         public Context context = new Context();
 
+        public ActionResult Environment(int id)
+        {
+            List<SelectListItem> foodTypes = new List<SelectListItem>();
+
+            Models.Environment chosenEnvironment = context.environments.Include("image").Include("foodType").Where(x => x.id == id).FirstOrDefault();
+
+            SelectListItem thing = new SelectListItem();
+            thing.Value = chosenEnvironment.foodType.ID.ToString();
+            thing.Text = chosenEnvironment.foodType.Name;
+            foodTypes.Add(thing);
+
+
+            foreach (var item in context.foodTypes)
+            {
+                if (item.ID != chosenEnvironment.foodType.ID)
+                {
+                    SelectListItem Object = new SelectListItem();
+                    Object.Value = item.ID.ToString();
+                    Object.Text = item.Name;
+                    foodTypes.Add(Object);
+                }
+            }
+
+            SelectList a = new SelectList(foodTypes, "Value", "Text");
+
+            ViewBag.FoodTypes = a;
+
+            return View(context.environments.Where(x => x.id == id).FirstOrDefault());
+        }
+
+        [HttpPost]
+        public ActionResult EditEnvironment(Models.Environment environment, int foodType, HttpPostedFileBase filetobeuploaded)
+        {
+                environment.foodType = context.foodTypes.Where(x => x.ID == foodType).FirstOrDefault();
+            
+                if (filetobeuploaded != null)
+                {
+                    using (MemoryStream a = new MemoryStream())
+                    {
+                        filetobeuploaded.InputStream.CopyTo(a);
+                        byte[] imagefile = a.GetBuffer();
+
+                        Image picture = new Image();
+                        picture.Name = filetobeuploaded.FileName;
+                        picture.ImageFile = imagefile;
+
+                        environment.image = picture;
+                    }
+                }
+
+                context.environments.Add(environment);
+                context.SaveChanges();
+
+                return RedirectToAction("Environment", "List", null);
+
+            }
+
+
         public ActionResult Affiliate(int id)
         {
             return View(context.affiliateLinks.Where(x => x.ID == id).FirstOrDefault());
@@ -227,6 +285,7 @@ namespace StarFishWebsite.Controllers
             editedfish.Description = fish.Description;
             editedfish.MoreDescriptions = fish.MoreDescriptions;
             editedfish.SubDescriptions = fish.SubDescriptions;
+            editedfish.Price = fish.Price;
             editedfish.PrivateNotes = fish.PrivateNotes;
             editedfish.InGame = fish.InGame;
 
@@ -284,6 +343,14 @@ namespace StarFishWebsite.Controllers
             fishToBeDeleted.Available = false;
             context.SaveChanges();
             return RedirectToAction("Fish", "List");
+        }
+
+        public ActionResult SoftDeleteEnvironment(int id)
+        {
+            Models.Environment environmentToBeDeleted = context.environments.Where(x => x.id == id).FirstOrDefault();
+            environmentToBeDeleted.available = false;
+            context.SaveChanges();
+            return RedirectToAction("Environment", "List");
         }
 
 

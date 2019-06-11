@@ -15,8 +15,17 @@ namespace StarFishWebsite.Controllers
 
             return View(ucContext.fish.Include("ImageCall"));
         }
+        
+        public ActionResult ConvertImageButton(int value)
+        {
+            if (ucContext.buttons.Include("image").Where(u => u.value == value).SingleOrDefault().image.ImageFile != null)
+            {
+                var imageData = ucContext.buttons.Include("image").Where(u => u.value == value).SingleOrDefault().image.ImageFile;
+                return File(imageData, "image/jpg");
+            }
+            return null;
 
-
+        }
 
         public ActionResult About()
         {

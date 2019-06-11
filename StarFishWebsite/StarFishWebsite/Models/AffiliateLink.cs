@@ -12,5 +12,6 @@ namespace StarFishWebsite.Models
         public string SiteName { get; set; }
         public string Description { get; set; }
         public bool Available { get; set; }
+        public int AccessLevel { get; set; }
     }
 }

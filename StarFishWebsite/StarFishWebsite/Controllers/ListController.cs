@@ -13,7 +13,7 @@ namespace StarFishWebsite.Controllers
 
         public ActionResult Fish()
         {
-            return View(ucContext.fish.Include("ImageCall").Include("AffiliateLink").Include("FishType").Where(x => x.Available == true));
+            return View(ucContext.fish.Include("ImageCall").Include("AffiliateLink").Include("FishType").Include("PreferredFood").Include("PreferredFood.icon").Where(x => x.Available == true));
         }
         public ActionResult ConvertImage(int id)
         {
@@ -25,7 +25,7 @@ namespace StarFishWebsite.Controllers
         public ActionResult Food()
         {
             ViewBag.Fish = ucContext.fish.Include("PreferredFood");
-            return View(ucContext.foods.Include("TypeofFood").Include("preferringfish").Where(x => x.Available == true));
+            return View(ucContext.foods.Include("TypeofFood").Include("preferringfish").Include("icon").Where(x => x.Available == true));
         }
 
         public ActionResult FoodType()
@@ -41,10 +41,19 @@ namespace StarFishWebsite.Controllers
             return View(ucContext.fishTypes.Where(x => x.Available == true));
         }
 
+        public ActionResult Environment()
+        {
+            return View(ucContext.environments.Include("image").Include("foodType").Where(x => x.available == true));
+        }
+
         public ActionResult Affiliate()
         {
             return View(ucContext.affiliateLinks.Where(x => x.Available == true));
         }
 
+        public ActionResult ExternalLink(string site)
+        {
+            return Redirect("http://www." + site);
+        }
     }
 }

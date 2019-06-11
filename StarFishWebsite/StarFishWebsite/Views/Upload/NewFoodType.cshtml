@@ -3,16 +3,27 @@
 @{
     ViewBag.Title = "NewFoodType";
 }
-
-<h2>NewFoodType</h2>
-
-@using (Html.BeginForm("AddFoodType", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(u => u.Name)
-        @Html.TextBoxFor(u => u.Name, new { @class = "form-control" })
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>New Food Type</h2>
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Add</button>
-}
-
+    <div class="card-body">
+        @using (Html.BeginForm("AddFoodType", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(u => u.Name)</td><td>
+                        @Html.TextBoxFor(u => u.Name, new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </td>
+                </tr>
+            </table>
+        }
+</div>
+</div>

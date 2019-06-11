@@ -1,0 +1,33 @@
+﻿@model StarFishWebsite.Models.Button
+
+@{
+    ViewBag.Title = "NewButton";
+}
+
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>ButtonImage</h2>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("SetButton", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tr>
+                    <td>
+                        Button:
+                    </td>
+                    <td>
+                        @Html.DropDownList("selectedbutton", (SelectList)ViewBag.buttons, "Select a button to set")
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Image: </label></td>
+                    <td>
+                        <input type="file" name="filetobeuploaded" />
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-primary">Set</button>
+        }
+
+    </div>

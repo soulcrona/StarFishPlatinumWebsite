@@ -103,3 +103,8 @@ C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFish
 C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.migration7.resources
 C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.FishAvailabilityAdded.resources
 C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.AvailabilityAdded.resources
+C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.UserRoles.resources
+C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.UserRoles2.resources
+C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.environment.resources
+C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.AddedFields.resources
+C:\Users\James\Documents\GitHub\StarFishPlatinumWebsite\StarFishWebsite\StarFishWebsite\obj\Debug\StarFishWebsite.Migrations.ButtonClass.resources

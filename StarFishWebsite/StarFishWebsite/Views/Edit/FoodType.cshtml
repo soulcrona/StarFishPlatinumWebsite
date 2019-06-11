@@ -4,15 +4,21 @@
     ViewBag.Title = "FoodType";
 }
 
-<h2>FoodType</h2>
 
-@using (Html.BeginForm("EditFoodType", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(u => u.Name)
-        @Html.TextBoxFor(u => u.Name, new { @class = "form-control", @value = Model.Name })
-        @Html.HiddenFor(u => u.ID, new { @value = Model.ID })
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>@Model.Name</h2>
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Edit</button>
-}
+    <div class="card-body">
+        @using (Html.BeginForm("EditFoodType", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(u => u.Name)
+                @Html.TextBoxFor(u => u.Name, new { @class = "form-control", @value = Model.Name })
+                @Html.HiddenFor(u => u.ID, new { @value = Model.ID })
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Edit</button>
+        }
+        </div>
+</div>

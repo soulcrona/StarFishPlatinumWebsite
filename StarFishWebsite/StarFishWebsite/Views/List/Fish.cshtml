@@ -3,40 +3,107 @@
 @{
     ViewBag.Title = "Fish";
 }
+@using StarFishWebsite.Models
 
-<h2>Fish</h2>
+<div class="card bg-dark mb-3">
+    <div class="card-header">
+        <h2>Fish</h2>
+    </div>
+    <div class="card-body">
 
-@Html.ActionLink("Add Fish", "UploadFile", "Upload", "", new { @class = "btn btn-primary" })
-
-<div style="background-color:white">
-    <table>
-        @foreach (var item in Model)
+        @using (Context i = new Context())
         {
-            if (item.Available == true)
+            if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
             {
-                <tr>
-                    <td>
-                        <img src='@Url.Action("ConvertImage", "List", new { id = item.ImageCall.ID })' height='200' width="400" />
-                    </td>
-                    <td style="background-color:white" width="400">
-                        @if (item.InGame == true)
-                        {
-                            <h4 style="color:green">@item.Name</h4>
-                        }
-                        else
-                        {
-                            <h4 style="color:red">@item.Name</h4>
-                        }
-                        <p>Fish Type: @item.FishType.Name</p>
-                        <p>Affiliate: <a href="@item.AffiliateLink.SiteName">@item.AffiliateLink.name</a></p>
-                        <p>Description: @item.Description</p>
-                        <p>SubDescription: @item.SubDescriptions</p>
-                        <p>More Descriptions: @item.MoreDescriptions</p>
-                        @Html.ActionLink("Edit", "Fish", "Edit", new { item.ID }, new { @class = "btn btn-default" })
-                        @Html.ActionLink("Delete", "SoftDeleteFish", "Edit", new { item.ID }, new { @class = "btn btn-default" })
-                    </td>
-                </tr>
+                @Html.ActionLink("Add Fish", "UploadFile", "Upload", "", new { @class = "btn btn-primary" })
+            }
+            foreach (var item in Model)
+            {
+                if (item.Available == true)
+                {
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">
+                            @if (item.InGame == true)
+                            {
+                                <h4 style="color:green">@item.Name</h4>
+                            }
+                            else
+                            {
+                                <h4 style="color:red">@item.Name</h4>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <img src='@Url.Action("ConvertImage", "List", new { id = item.ImageCall.ID })' height='200' width="400" style="float:right" />
+                            <table>
+                                <tr>
+                                    <th style="margin-right: 10px"></th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Fish Type:
+                                    </td>
+                                    <td>
+                                        @item.FishType.Name
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Affiliate: </td>
+                                    <td>
+                                        @Html.ActionLink(item.AffiliateLink.name, "ExternalLink", "List", new { site = item.AffiliateLink.SiteName }, "")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Price: </td>
+                                    <td>$@item.Price.ToString("0.00")</td>
+                                </tr>
+                                @if (item.Description != null)
+                                {
+                                    <tr>
+                                        <td>Description: </td>
+                                        <td>@item.Description</td>
+                                    </tr>
+                                }
+                                @if (item.SubDescriptions != null)
+                                {
+                                    <tr>
+                                        <td>SubDescription:</td>
+                                        <td>@item.SubDescriptions</td>
+                                    </tr>
+                                }
+                                @if (item.MoreDescriptions != null)
+                                {
+                                    <tr>
+                                        <td>More Descriptions: </td>
+                                        <td>@item.MoreDescriptions</td>
+                                    </tr>
+                                }
+                            </table>
+                            @if (item.PreferredFood.Count >= 1)
+                            {
+                                <table>
+                                    <tr><td>Preferred Foods:</td></tr>
+                                    <tr>
+                                        <td>
+                                            @foreach (var food in item.PreferredFood)
+                                            {
+                                                <img src='@Url.Action("ConvertImage", "List", new { id = food.icon.ID })' height='50' width="50" />
+                                            }
+                                        </td>
+                                    </tr>
+                                </table>
+                            }
+
+                            @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                            {
+
+                                @Html.ActionLink("Edit", "Fish", "Edit", new { item.ID }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "SoftDeleteFish", "Edit", new { item.ID }, new { @class = "btn btn-primary" })
+                            }
+                            </div>
+                    </div>
+                }
             }
         }
-    </table>
-</div>
+        </div>
+    </div>

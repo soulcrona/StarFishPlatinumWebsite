@@ -1,9 +1,58 @@
 ﻿@{
+    /**/
+
     ViewBag.Title = "Home Page";
 }
 
-@Html.ActionLink("Fish", "Fish", "List", null,  new { @class = "btn btn-primary" } )
-@Html.ActionLink("Fish Types", "FishType", "List", null, new { @class = "btn btn-primary" })
-@Html.ActionLink("Food", "Food", "List", null, new { @class = "btn btn-primary" })
-@Html.ActionLink("Food Types", "FoodType", "List", null, new { @class = "btn btn-primary" })
-@Html.ActionLink("Our Affiliates", "Affiliate", "List", null, new { @class = "btn btn-primary" })
+@using StarFishWebsite.Models
+
+<div class="card bg-dark mb-3">
+    <div class="card-header">
+        <h2>Starfish Website</h2>
+    </div>
+    <div class="card-body">
+        @using (Context i = new Context())
+        {
+            if (i.buttons.Where(x => x.value == 1).FirstOrDefault() != null)
+            {
+                <div class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h2 style="color:darkblue">Fish</h2>
+                    </div>
+                    <div class="card-body">
+                        <a href="@Url.Action("Fish", "List")">
+                            <img src='@Url.Action("ConvertImageButton", "Home", new { value = 1 })' width="100%" />
+                        </a>
+                    </div>
+                </div>
+            }
+            if (i.buttons.Where(x => x.value == 2).FirstOrDefault() != null)
+            {
+                <div class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h2 style="color:darkblue">Food</h2>
+                    </div>
+                    <div class="card-body">
+                        <a href="@Url.Action("Food", "List")">
+                            <img src='@Url.Action("ConvertImageButton", "Home", new { value = 2 })' width="100%" />
+                        </a>
+                    </div>
+                </div>
+            }
+            if (i.buttons.Where(x => x.value == 3).FirstOrDefault() != null)
+            {
+                <div class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h2 style="color:darkblue">Environment</h2>
+                    </div>
+                    <div class="card-body">
+                        <a href="@Url.Action("Environment", "List")">
+                            <img src='@Url.Action("ConvertImageButton", "Home", new { value = 3 })' width="100%" />
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+                </div>
+

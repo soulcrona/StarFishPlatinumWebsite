@@ -1,0 +1,64 @@
+﻿@model StarFishWebsite.Models.Login
+
+@{
+    ViewBag.Title = "NewUser";
+}
+@using StarFishWebsite.Models
+
+@using (Context i = new Context())
+{
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <h2>Register</h2>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("AddUser", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <table>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(u => u.Username)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(u => u.Username, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(u => u.Password)
+                        </td>
+                        <td>
+                            @Html.PasswordFor(u => u.Password)
+                        </td>
+                    </tr>
+                    @if (i.logins.Count() == 0 || (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Where(x => x.Role.AccessLevel >= 10).Count() > 0))
+                    {
+                        <tr>
+                            <td>
+                                @Html.LabelFor(u => u.Role)
+                            </td>
+                            <td>
+                                @Html.DropDownList("RoleID", (SelectList)ViewBag.Roles, "Select a role")
+                            </td>
+                        </tr>
+                    }
+                        <tr>
+                            <td>
+                                @Html.LabelFor(u => u.Email)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(u => u.Email)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                }
+                </div>
+            </div>
+        }

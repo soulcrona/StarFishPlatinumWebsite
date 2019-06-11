@@ -14,5 +14,8 @@ namespace StarFishWebsite.Models
         public bool InGame { get; set; }
         public List<Fish> preferringfish {get; set;}
         public bool Available { get; set; }
+        public int AccessLevel { get; set; }
+        public float price { get; set; }
+        public Image icon { get; set; }
     }
 }

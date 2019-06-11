@@ -4,24 +4,37 @@
     ViewBag.Title = "Food";
 }
 
-<h2>Food</h2>
 
-@using (Html.BeginForm("EditFood", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(u => u.Name)
-        @Html.TextBoxFor(u => u.Name, new { @class = "form-control", @value = Model.Name })
-        @Html.HiddenFor(u => u.ID, new { @value = Model.ID})
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>@Model.Name</h2>
     </div>
-    <label>Food Type:</label>
-    <div>
-        @Html.DropDownList("selectedfoodtype", (SelectList)ViewBag.FoodTypes)
+    <div class="card-body">
+        @using (Html.BeginForm("EditFood", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(u => u.Name)
+                @Html.TextBoxFor(u => u.Name, new { @class = "form-control", @value = Model.Name })
+                @Html.HiddenFor(u => u.ID, new { @value = Model.ID })
+            </div>
+            <tr>
+                <td>
+                    <label>Price: </label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.price, new { @type = "number", step = "0.01", @value = Model.price })
+                </td>
+            </tr>
+            <label>Food Type:</label>
+            <div>
+                @Html.DropDownList("selectedfoodtype", (SelectList)ViewBag.FoodTypes)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(u => u.InGame)
+                @Html.CheckBoxFor(u => u.InGame, new { @checked = Model.InGame })
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Edit</button>
+        }
     </div>
-    <div class="form-group">
-        @Html.LabelFor(u => u.InGame)
-        @Html.CheckBoxFor(u => u.InGame, new { @checked = Model.InGame })
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Edit</button>
-}
-
+</div>

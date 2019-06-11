@@ -15,5 +15,9 @@ namespace StarFishWebsite.Models
         public DbSet<Food> foods { get; set; }
         public DbSet<FoodType> foodTypes { get; set; }
         public DbSet<Image> images { get; set; }
+        public DbSet<Login> logins { get; set; }
+        public DbSet<Role> roles { get; set; }
+        public DbSet<Environment> environments { get; set; }
+        public DbSet<Button> buttons { get; set; }
     }
 }

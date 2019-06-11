@@ -3,29 +3,43 @@
 @{
     ViewBag.Title = "FishType";
 }
+@using StarFishWebsite.Models
 
-<h2>Fish Types</h2>
 
-@Html.ActionLink("Add Fish Type", "NewFishType", "Upload", "", new { @class = "btn btn-primary" })
 
-<div>
-    <table>
-        <tr>
-            <th>Name:</th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            if (item.Available == true)
+@using (Context i = new Context())
+{
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
             {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>
-                        @Html.ActionLink("Edit", "FishType", "Edit", new { item.ID }, new { @class = "btn btn-default" })
-                        @Html.ActionLink("Delete", "SoftDeleteFishType", "Edit", new { item.ID }, new { @class = "btn btn-default" })
-                    </td>
-                </tr>
+            @Html.ActionLink("Add Fish Type", "NewFishType", "Upload", "", new { @class = "btn btn-primary" })
             }
-        }
-    </table>
-</div>
+            <h2>Fish Types</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <th>Name:</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    if (item.Available == true)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>
+                                @if (i.logins.Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).Count() > 0 && i.logins.Include("Role").Where(x => x.IPAddress == Request.UserHostAddress).Where(x => x.LoginTime > DateTime.Now).FirstOrDefault().Role.AccessLevel >= 10)
+                                {
+                                    @Html.ActionLink("Edit", "FishType", "Edit", new { item.ID }, new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Delete", "SoftDeleteFishType", "Edit", new { item.ID }, new { @class = "btn btn-primary" })
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+}

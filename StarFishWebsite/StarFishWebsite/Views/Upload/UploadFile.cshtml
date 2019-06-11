@@ -4,65 +4,113 @@
     ViewBag.Title = "UploadFile";
 }
 
-<h2>Upload File</h2>
 
-
-@using (Html.BeginForm("UploadFish", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(u => u.fish.Name)
-        @Html.TextBoxFor(u => u.fish.Name, new { @class = "form-control" })
+<div class="card bg-light mb-3">
+    <div class="card-header">
+        <h2>New Fish</h2>
     </div>
-    <div>
-        <label>Affiliate:</label>
-        <div>
-            @Html.DropDownList("selectedaffiliate", (SelectList)ViewBag.Affiliates, "Select an affiliate")
-        </div>
-    </div>
-        <label>Fish Type:</label>
-    <div>
-        @Html.DropDownList("selectedfishtype", (SelectList)ViewBag.FishTypes, "Select a fish type")
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(u => u.fish.Description)
-        @Html.TextBoxFor(u => u.fish.Description, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(u => u.fish.SubDescriptions)
-        @Html.TextBoxFor(u => u.fish.SubDescriptions, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(u => u.fish.MoreDescriptions)
-        @Html.TextBoxFor(u => u.fish.MoreDescriptions, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(u => u.fish.PrivateNotes)
-        @Html.TextBoxFor(u => u.fish.PrivateNotes, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(u => u.fish.InGame)
-        @Html.CheckBoxFor(u => u.fish.InGame)
-    </div>
-    <div>
-        @Html.LabelFor(u => u.fish.PreferredFood)
-        @{
-            int i = 0;
-            foreach (var item in ViewBag.Context.foods)
-            {
-                <div class="form-group">
-                    <label>@item.Name</label>
-                    @Html.CheckBoxFor(u => u.fpyn[i])
-                </div>
-                @Html.HiddenFor(u => u.fpid[i], new { Value = item.ID })
-
-                i = i + 1;
+    <div class="card-body">
+        @using (Html.BeginForm("UploadFish", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+        <table>
+            <tr>
+                <td><label>Name: </label></td>
+                <td>
+                    @Html.TextBoxFor(u => u.fish.Name, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>Affiliate: </td>
+                <td>
+                    @Html.DropDownList("selectedaffiliate", (SelectList)ViewBag.Affiliates, "Select an affiliate")
+                </td>
+            </tr>
+            <tr>
+                <td><label>Fish Type: </label></td>
+                <td>
+                    @Html.DropDownList("selectedfishtype", (SelectList)ViewBag.FishTypes, "Select a fish type")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Price: </label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.fish.Price, new { @type = "number", step = "0.01" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.fish.Description)
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.fish.Description, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.fish.SubDescriptions)
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.fish.SubDescriptions, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.fish.MoreDescriptions)
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.fish.MoreDescriptions, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.fish.PrivateNotes)
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.fish.PrivateNotes, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.fish.InGame)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(u => u.fish.InGame)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <th><label>Preferred Foods (Select all that apply):</label></th>
+                <td>
+            </tr>
+            @{
+                int i = 0;
+                foreach (var item in ViewBag.Context.foods)
+                {
+                    @Html.HiddenFor(u => u.fpid[i], new { Value = item.ID })
+                    <tr>
+                        <td>
+                            <label>@item.Name</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(u => u.fpyn[i])
+                        </td>
+                    </tr>
+                    i = i + 1;
+                }
             }
-        }
-    </div>
-    <div>
-        <input type="file" name="filetobeuploaded" />
-    </div>
-    <br/>
-    <button type="submit" class="btn btn-primary">Create</button>
-}
+            <tr>
+                <td><label>Image: </label></td>
+                <td>
+                    <input type="file" name="filetobeuploaded" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </td>
+            </tr>
+        </table>
+                            }
